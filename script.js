@@ -62,7 +62,46 @@ map.on('load', function() {
     }
   }, 'waterway-label');
 
-
+  map.addLayer({
+    id: 'trees-point',
+    type: 'circle',
+    source: 'trees',
+    minzoom: 14,
+    paint: {
+      // increase the radius of the circle as the zoom level and HEIGHT_RANGE_ID value increases
+      'circle-radius': {
+        property: 'height_range_id',
+        type: 'exponential',
+        stops: [
+          [{ zoom: 15, value: 0 }, 5],
+          [{ zoom: 15, value: 10 }, 10],
+          [{ zoom: 22, value: 0 }, 20],
+          [{ zoom: 22, value: 10 }, 50],
+        ]
+      },
+      'circle-color': {
+        property: 'height_range_id',
+        type: 'exponential',
+        stops: [
+          [0, 'rgba(236,222,239,0)'],
+          [1, 'rgb(236,222,239)'],
+          [2, 'rgb(208,209,230)'],
+          [4, 'rgb(166,189,219)'],
+          [6, 'rgb(50,50,50)'],
+          [8, 'rgb(28,144,153)'],
+          [10, 'rgb(1,108,89)']
+        ]
+      },
+      'circle-stroke-color': 'blue',
+      'circle-stroke-width': 1,
+      'circle-opacity': {
+        stops: [
+          [14, 0],
+          [15, 1]
+        ]
+      }
+    }
+  }, 'waterway-label');
   });
 
 map.on('click', 'trees-point', function(e) {

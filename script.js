@@ -6,8 +6,12 @@ mapboxgl.accessToken = 'pk.eyJ1IjoianN3ZWxzaCIsImEiOiJjazFqdXczOHYyNWNxM25udDE4b
       zoom: 10.60      
     });
     
-
-
+map.on('load', function() {
+  map.addSource('trees', {
+    type: 'geojson',
+    data: './trees.geojson'
+  });
+});
 map.on('click', 'trees-point', function(e) {
   console.log(e)
   new mapboxgl.Popup()
